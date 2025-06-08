@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>1.85 Studios</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #1a1a1a;
+        padding: 1rem;
+        border: 1.5px solid #555;
+        width: 90%;
+        max-width: 900px;
+        color: white;
+        border-radius: 6px;
+        max-height: 90vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+        flex-grow: 1;
+        width: 100%;
+      }
+
+      .modal-body iframe {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: none;
+        max-height: 600px;
+        flex-shrink: 0;
+      }
+
+      .modal-title {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+        color: white;
+      }
+
+      .modal-extra-text {
+        margin-top: 0.5rem;
+        color: white;
+        text-align: center;
+        font-size: 1rem;
+        line-height: 1.4;
+        white-space: normal;
+      }
+
+      .modal-close {
+        color: white;
+        position: absolute;
+        top: 0.5rem;
+        right: 1rem;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .thumb {
+        margin-bottom: 1.5rem;
+      }
+
+      .thumb img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+      }
+
+      .thumb h2 {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 0.5rem;
+        color: white;
+      }
+
+      #footer {
+        background-color: #222;
+        padding: 1rem 0;
+      }
+
+      #footer .inner.split {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        color: white;
+        gap: 1rem;
+      }
+
+      #footer section {
+        margin: 0;
+      }
+
+      #footer .about,
+      #footer .social {
+        flex: 1 1 250px;
+      }
+
+      #footer .social ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      #footer img {
+        max-height: 80px;
+        width: auto;
+      }
+
+      .copyright {
+        text-align: center;
+        width: 100%;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+      }
+    </style>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+
+      <!-- Header -->
+      <header id="header">
+        <h1><strong>1.85 Studios</strong></h1>
+        <h3>1.85estudios@gmail.com</h3>
+        <ul class="icons">
+          <li><a href="https://www.instagram.com/1.85studios/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+          <li><a href="https://www.youtube.com/@185studios" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+          <li><a href="https://www.linkedin.com/company/185studios/" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+        </ul>
+        <nav>
+          <ul>
+            <li><a href="#footer" class="icon solid fa-info-circle">Contáctanos</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main -->
+      <div id="main">
+        <!-- Thumbnails -->
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/VuXJEYuYJPU" data-title="Boletín especial de noticias" data-extra='<h3>07-06-2025</h3><h4>Este proyecto se realizó como concepto para una posible serie de audiodramas.</h4>' class="open-modal-link">
+            <img src="images/thumbs/ben.webp" alt="" />
+          </a>
+          <h2>Boletín especial de noticias | Audiodrama</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/FOzhSdSHeCU" data-title="11 Miles" data-extra='<h3>29-05-2025</h3><h4>Cortometraje de misterio/terror basado en el creepypasta.</h4>' class="open-modal-link">
+            <img src="images/thumbs/11_miles.webp" alt="" />
+          </a>
+          <h2>11 Miles | Cortometraje</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/tgm5VGlTEds" data-title="19" data-extra='<h3>27-05-2024</h3><h4>Videclip rodado en noviembre de 2022.</h4>' class="open-modal-link">
+            <img src="images/thumbs/19.webp" alt="" />
+          </a>
+          <h2>Rober Marccu - 19 | Videoclip</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/a0hH6lI0oJ4" data-title="Pura guerra" data-extra='<h3>17-05-2024</h3><h4>Videclip rodado en el parque del Retiro y en Plaza España.</h4>' class="open-modal-link">
+            <img src="images/thumbs/pura_guerra.webp" alt="" />
+          </a>
+          <h2>Rober Marccu - Pura guerra | Videoclip</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/gInpo3Cyv58" data-title="Entre tomas" data-extra='<h3>01-05-2024 a 26-06-2024</h3><h4>Temporada 1 del divertidísimo podcast, rodado durante varios fines de semana con temática de cine y series.</h4>' class="open-modal-link">
+            <img src="images/thumbs/entre_tomas.webp" alt="" />
+          </a>
+          <h2>Entre Tomas | Podcast</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/gxxb-iZUPsM" data-title="Ginebra" data-extra='<h3>02-02-2024</h3><h4>Nuestro primer videclip de trap.</h4>' class="open-modal-link">
+            <img src="images/thumbs/ginebra.webp" alt="" />
+          </a>
+          <h2>Nick bb - Ginebra | Videoclip</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/cL8Y2IgLnwY" data-title="Nunca imaginé" data-extra='<h3>19-01-2024</h3><h4>Videclip rodado en el Parque Adolfo Suárez.</h4>' class="open-modal-link">
+            <img src="images/thumbs/nunca_imagine.webp" alt="" />
+          </a>
+          <h2>Rober Marccu - Nunca Imaginé | Videoclip</h2>
+        </article>
+
+        <article class="thumb">
+          <a href="#" data-video-url="https://www.youtube.com/embed/MBSswyDyb84" data-title="Sigues en mi mente" data-extra='<h3>01-12-2023</h3><h4>Videclip rodado con múltiples localizaciones y decenas de figurantes.</h4>' class="open-modal-link">
+            <img src="images/thumbs/sigues_en_mi_mente.webp" alt="" />
+          </a>
+          <h2>Rober Marccu - Sigues En Mi Mente | Videoclip</h2>
+        </article>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer" class="panel">
+        <div class="inner" style="text-align: center; color: white;">
+          <strong>Madrid, España</strong> &nbsp;&nbsp;
+          <ul class="icons" style="display: inline-flex; gap: 1rem; vertical-align: middle; margin: 0; padding: 0; list-style: none;">
+            <li><a href="https://www.instagram.com/1.85studios/" class="icon brands fa-instagram" style="color: white;"><span class="label">Instagram</span></a></li>
+            <li><a href="https://www.youtube.com/@185studios" class="icon brands fa-youtube" style="color: white;"><span class="label">YouTube</span></a></li>
+            <li><a href="https://www.linkedin.com/company/185studios/" class="icon brands fa-linkedin-in" style="color: white;"><span class="label">LinkedIn</span></a></li>
+          </ul>
+          &nbsp;&nbsp;
+          <span style="font-size: 0.9rem;">1.85estudios@gmail.com</span>
+        </div>
+      </footer>
+
+      <!-- Modal -->
+      <div id="videoModal" class="modal">
+        <div class="modal-content">
+          <span class="modal-close" onclick="closeModal()">&times;</span>
+          <div class="modal-body">
+            <iframe id="modalIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div class="modal-title" id="modalTitle">Video Title</div>
+            <div id="modalExtraText" class="modal-extra-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      function openModal(videoUrl, title, extraHtml = '') {
+        document.getElementById("modalIframe").src = videoUrl;
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalExtraText").innerHTML = extraHtml;
+        document.getElementById("videoModal").style.display = "flex";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("videoModal");
+        const iframe = document.getElementById("modalIframe");
+        iframe.src = "";
+        modal.style.display = "none";
+      }
+
+      window.addEventListener('load', () => {
+        closeModal();
+      });
+
+      document.querySelectorAll('.open-modal-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const videoUrl = link.getAttribute('data-video-url');
+          const title = link.getAttribute('data-title');
+          const extra = link.getAttribute('data-extra') || '';
+          openModal(videoUrl, title, extra);
+        });
+      });
+    </script>
+  </body>
+</html>
