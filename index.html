@@ -1,290 +1,137 @@
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>1.85 Studios</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <style>
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 10000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.8);
-        justify-content: center;
-        align-items: center;
-      }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>1.85 Studios</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="1.85 Studios — productora audiovisual en Madrid: largometrajes, cortometrajes, videoclips, audiodramas y podcasts.">
+<link rel="icon" href="data:,">
+<link rel="preload" href="fonts/Karla.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Karla";src:url(fonts/Karla.woff2) format("woff2");font-weight:300 600;font-style:normal;font-display:swap}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{--h:4em;margin:0;padding:0 0 var(--h);background:#242629;color:#fff;font-family:"Karla",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-weight:300;line-height:1.65}
+body.lock{overflow:hidden}
+h1,h2,h3,h4{margin:0;font-weight:300;letter-spacing:.1em;line-height:1.5;text-transform:uppercase;color:#fff}
+a{color:inherit;text-decoration:none}
 
-      .modal-content {
-        background-color: #1a1a1a;
-        padding: 1rem;
-        border: 1.5px solid #555;
-        width: 90%;
-        max-width: 900px;
-        color: white;
-        border-radius: 6px;
-        max-height: 90vh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-      }
+#header{position:fixed;left:0;bottom:0;z-index:10;width:100%;height:var(--h);padding:0 1.5em;display:flex;align-items:center;justify-content:space-between;background:#1f2224}
+#header h1{font-size:1em;font-weight:600;color:#a0a0a1}
+.contact{display:flex;align-items:center;gap:1.25em;font-size:.9rem;font-weight:300}
+.contact strong{font-weight:600}
+.contact a:not(.icons a){opacity:.85}
+.icons{display:flex;gap:1.25em;align-items:center}
+.icons a{display:flex;color:#fff;opacity:.85;transition:opacity .15s}
+.icons a:hover{opacity:1}
 
-      .modal-body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-y: auto;
-        padding-right: 0.5rem;
-        flex-grow: 1;
-        width: 100%;
-      }
+#main{display:grid;grid-template-columns:repeat(4,1fr)}
+.thumb{margin:0 0 1.5rem;min-width:0}
+.thumb a{display:block;overflow:hidden;contain:paint}
+.thumb img{display:block;width:100%;height:auto;aspect-ratio:800/548;object-fit:cover;background:#1f2224;transition:opacity .15s}
+.thumb a:hover img{opacity:.85}
+.thumb h2{width:100%;margin:.5rem 0 0;padding:0 .5rem;font-size:1rem;text-align:center;white-space:normal;overflow-wrap:anywhere}
 
-      .modal-body iframe {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        border: none;
-        max-height: 600px;
-        flex-shrink: 0;
-      }
 
-      .modal-title {
-        margin-top: 1rem;
-        font-size: 1.5rem;
-        text-align: center;
-        color: white;
-      }
+.modal{display:none;position:fixed;inset:0;z-index:100;overflow:auto;background:rgba(0,0,0,.85);justify-content:center;align-items:center}
+.modal.open{display:flex}
+.modal-content{position:relative;display:flex;flex-direction:column;width:90%;max-width:900px;max-height:90vh;padding:1rem;overflow:hidden;background:#1a1a1a;border:1.5px solid #555;border-radius:6px}
+.modal-close{position:absolute;top:.25rem;right:.75rem;z-index:1;padding:0 .25rem;background:none;border:0;color:#fff;font-size:28px;font-weight:700;line-height:1.4;cursor:pointer}
+.modal-body{display:flex;flex-direction:column;align-items:center;flex-grow:1;width:100%;padding-right:.5rem;overflow-y:auto}
+.modal-body iframe{flex-shrink:0;width:100%;max-height:600px;aspect-ratio:16/9;border:0}
+.modal-title,.modal-extra-text{width:100%;max-width:100%;text-align:center;white-space:normal;overflow-wrap:anywhere}
+.modal-title{margin-top:1rem;font-size:1.5rem;letter-spacing:.1em;text-transform:uppercase}
+.modal-extra-text{margin-top:.5rem;padding:0 .5rem;font-size:1rem;line-height:1.4}
+.modal-extra-text h3,.modal-extra-text h4{width:100%;margin:.5rem auto;text-align:center;overflow-wrap:anywhere}
+.modal-extra-text a{text-decoration:underline;text-underline-offset:.2em}
+.modal-extra-text a:hover{opacity:.8}
+.modal-extra-text h3{font-size:1.1em}
+.modal-extra-text h4{font-size:1em}
 
-      .modal-extra-text {
-        margin-top: 0.5rem;
-        color: white;
-        text-align: center;
-        font-size: 1rem;
-        line-height: 1.4;
-        white-space: normal;
-      }
+@media (max-width:1680px){#main{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:1280px){#main{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:736px){
+ body{--h:5.5em;padding:var(--h) 0 0}
+ #header{top:0;bottom:auto;padding:0 1em;flex-direction:column;justify-content:center;gap:.2em}
+ #header h1{font-size:.9em}
+ .contact{flex-wrap:wrap;justify-content:center;gap:.25em 1em;font-size:.8rem}
+ .modal-extra-text h3{font-size:.9em}
+ .modal-extra-text h4{font-size:.8em}
+ .thumb h2{font-size:.9rem}
+}
+@media (max-width:480px){#main{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
 
-      .modal-close {
-        color: white;
-        position: absolute;
-        top: 0.5rem;
-        right: 1rem;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-      }
+<header id="header">
+  <h1>1.85 Studios</h1>
+  <div class="contact">
+    <strong>Madrid, España</strong>
+    <nav class="icons">
+      <a href="https://www.instagram.com/1.85studios/" aria-label="Instagram" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
+        <a href="https://www.youtube.com/@185studios" aria-label="YouTube" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    </nav>
+    <a href="mailto:1.85estudios@gmail.com">1.85estudios@gmail.com</a>
+  </div>
+</header>
 
-      .thumb {
-        margin-bottom: 1.5rem;
-      }
+<main id="main">
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/0VhcEayRKTI?start=4" data-title="Instante" data-extra='<h3>Largometraje | 95 minutos | 26-04-2026 </h3><h4> Un drama romántico con producción Argentina/Española y distribución en <a href="https://www.primevideo.com/detail/0QZ7XL00IPDSMB2488NYI5MK7L?_ssoLoop=1" target="_blank" rel="noopener">Amazon Prime</a>.</h4>' class="open-modal-link"> <img src="images/thumbs/instante.webp" alt="" width="800" height="548" decoding="async" fetchpriority="high"> </a> <h2>Instante | Largometraje</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/VuXJEYuYJPU" data-title="Boletín especial de noticias" data-extra='<h3>Audiodrama | 5:31 minutos | 07-06-2025 </h3><h4> Ficción sonora de suspense sobre el Dr. Edward Crandon, atrapado en un vuelo nocturno mientras la radio emite noticias del pasado y del futuro. Diseño de sonido envolvente y giro final que cierra el relato con fuerza.</h4>' class="open-modal-link"> <img src="images/thumbs/ben.webp" alt="" width="800" height="548" decoding="async" fetchpriority="high"> </a> <h2>Boletín especial de noticias | Audiodrama</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/FOzhSdSHeCU" data-title="11 Miles" data-extra='<h3>Cortometraje | 7 minutos | 29-05-2025</h3><h4>Adaptación de la creepypasta homónima: un conductor debe superar once tramos de carretera para lograr su deseo, a riesgo de perder la cordura. Rodado de noche y con montaje rápido para mantener la tensión hasta el último plano.</h4>' class="open-modal-link"> <img src="images/thumbs/11_miles.webp" alt="" width="800" height="548" decoding="async" fetchpriority="high"> </a> <h2>11 Miles | Cortometraje</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/tgm5VGlTEds" data-title="19" data-extra='<h3>Videoclip | 4:06 minutos | 27-05-2024</h3><h4>Historia de desamor juvenil. El cantante alterna escenas íntimas con su pareja y el momento en que la descubre con otro. Letra directa y fotografía cálida que subrayan la nostalgia y la traición.</h4>' class="open-modal-link"> <img src="images/thumbs/19.webp" alt="" width="800" height="548" decoding="async" fetchpriority="high"> </a> <h2>Rober Marccu - 19 | Videoclip</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/a0hH6lI0oJ4" data-title="Pura guerra" data-extra='<h3>Videoclip | 3:08 minutos | 17-05-2024</h3><h4>Romance urbano filmado en varias localizaciones de Madrid. Planos dinámicos muestran la dualidad entre deseo y conflicto, reforzada por un estribillo que contrasta la paz prometida con la “guerra” interior de la pareja.</h4>' class="open-modal-link"> <img src="images/thumbs/pura_guerra.webp" alt="" width="800" height="548" decoding="async" loading="lazy"> </a> <h2>Rober Marccu - Pura guerra | Videoclip</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/gInpo3Cyv58" data-title="Entre tomas" data-extra='<h3>Podcast | 9 episodios | 01-05-2024 a 26-06-2024</h3><h4>Cinco jóvenes vinculados al cine conversan sobre películas y cultura pop. Cada capítulo aborda un tema (terror, sagas, estrenos, etc) en un tono distendido, con secciones especiales y disfraces ocasionales que aportan frescura.</h4>' class="open-modal-link"> <img src="images/thumbs/entre_tomas.webp" alt="" width="800" height="548" decoding="async" loading="lazy"> </a> <h2>Entre Tomas | Podcast</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/gxxb-iZUPsM" data-title="Ginebra" data-extra='<h3>Videoclip | 4:22 minutos | 02-02-2024</h3><h4>Trap confesional con narrativa simbólica: Nick bb celebra su propio funeral para despedirse de su pasado y presentar una nueva etapa artística. Ambientación oscura, elementos funerarios y ruptura de la foto final como cierre visual.</h4>' class="open-modal-link"> <img src="images/thumbs/ginebra.webp" alt="" width="800" height="548" decoding="async" loading="lazy"> </a> <h2>Nick bb - Ginebra | Videoclip</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/cL8Y2IgLnwY" data-title="Nunca imaginé" data-extra='<h3>Videoclip | 3:38 minutos | 19-01-2024</h3><h4>Colaboración pop filmada en exteriores naturales. Colores vivos y puesta en escena ligera reflejan la complicidad de ambos artistas. La canción celebra un amor que se descubre inesperadamente y lo llena todo de energía positiva.</h4>' class="open-modal-link"> <img src="images/thumbs/nunca_imagine.webp" alt="" width="800" height="548" decoding="async" loading="lazy"> </a> <h2>Rober Marccu & Marina Sánchez - Nunca Imaginé | Videoclip</h2> </article>
+      <article class="thumb"> <a href="#" data-video-url="https://www.youtube.com/embed/MBSswyDyb84" data-title="Sigues en mi mente" data-extra='<h3>Videoclip | 3:33 minutos | 01-12-2023</h3><h4>Relato de una conexión instantánea. Encuentro en discoteca, escapada en moto y atardecer en la montaña. Destaca la secuencia en carretera y la letra que repasa, hora a hora, una noche imposible de olvidar.</h4>' class="open-modal-link"> <img src="images/thumbs/sigues_en_mi_mente.webp" alt="" width="800" height="548" decoding="async" loading="lazy"> </a> <h2>Rober Marccu - Sigues En Mi Mente | Videoclip</h2> </article>
+</main>
 
-      .thumb img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        display: block;
-      }
 
-      .thumb h2 {
-        font-size: 1rem;
-        text-align: center;
-        margin-top: 0.5rem;
-        color: white;
-      }
-
-      #footer {
-        background-color: #222;
-        padding: 1rem 0;
-      }
-
-      #footer .inner.split {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 1rem;
-        color: white;
-        gap: 1rem;
-      }
-
-      #footer section {
-        margin: 0;
-      }
-
-      #footer .about,
-      #footer .social {
-        flex: 1 1 250px;
-      }
-
-      #footer .social ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        gap: 0.75rem;
-      }
-
-      #footer img {
-        max-height: 80px;
-        width: auto;
-      }
-
-      .copyright {
-        text-align: center;
-        width: 100%;
-        font-size: 0.8rem;
-        margin-top: 0.5rem;
-      }
-    </style>
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-  </head>
-  <body class="is-preload">
-    <div id="wrapper">
-
-      <!-- Header -->
-      <header id="header">
-        <h1><strong>1.85 Studios</strong></h1>
-        <nav>
-  <ul class="icons">
-    <li><a href="https://www.instagram.com/1.85studios/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-    <li><a href="https://www.youtube.com/@185studios" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
-    <li><a href="https://www.linkedin.com/company/185studios/" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-  </ul>
-</nav>
-
-      </header>
-
-      <!-- Main -->
-      <div id="main">
-        <!-- Thumbnails -->
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/VuXJEYuYJPU" data-title="Boletín especial de noticias" data-extra='<h3>Audiodrama | 5:31 minutos | 07-06-2025 </h3><h4>
-Ficción sonora de suspense sobre el Dr. Edward Crandon, atrapado en un vuelo nocturno mientras la radio emite noticias del pasado y del futuro. Diseño de sonido envolvente y giro final que cierra el relato con fuerza.</h4>' class="open-modal-link">
-            <img src="images/thumbs/ben.webp" alt="" />
-          </a>
-          <h2>Boletín especial de noticias | Audiodrama</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/FOzhSdSHeCU" data-title="11 Miles" data-extra='<h3>Cortometraje | 7 minutos | 29-05-2025</h3><h4>Adaptación de la creepypasta homónima: un conductor debe superar once tramos de carretera para lograr su deseo, a riesgo de perder la cordura. Rodado de noche y con montaje rápido para mantener la tensión hasta el último plano.</h4>' class="open-modal-link">
-            <img src="images/thumbs/11_miles.webp" alt="" />
-          </a>
-          <h2>11 Miles | Cortometraje</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/tgm5VGlTEds" data-title="19" data-extra='<h3>Videoclip | 4:06 minutos | 27-05-2024</h3><h4>Historia de desamor juvenil. El cantante alterna escenas íntimas con su pareja y el momento en que la descubre con otro. Letra directa y fotografía cálida que subrayan la nostalgia y la traición.</h4>' class="open-modal-link">
-            <img src="images/thumbs/19.webp" alt="" />
-          </a>
-          <h2>Rober Marccu - 19 | Videoclip</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/a0hH6lI0oJ4" data-title="Pura guerra" data-extra='<h3>Videoclip | 3:08 minutos | 17-05-2024</h3><h4>Romance urbano filmado en varias localizaciones de Madrid. Planos dinámicos muestran la dualidad entre deseo y conflicto, reforzada por un estribillo que contrasta la paz prometida con la “guerra” interior de la pareja.</h4>' class="open-modal-link">
-            <img src="images/thumbs/pura_guerra.webp" alt="" />
-          </a>
-          <h2>Rober Marccu - Pura guerra | Videoclip</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/gInpo3Cyv58" data-title="Entre tomas" data-extra='<h3>Podcast | 9 episodios | 01-05-2024 a 26-06-2024</h3><h4>Cinco jóvenes vinculados al cine conversan sobre películas y cultura pop. Cada capítulo aborda un tema (terror, sagas, estrenos, etc) en un tono distendido, con secciones especiales y disfraces ocasionales que aportan frescura.</h4>' class="open-modal-link">
-            <img src="images/thumbs/entre_tomas.webp" alt="" />
-          </a>
-          <h2>Entre Tomas | Podcast</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/gxxb-iZUPsM" data-title="Ginebra" data-extra='<h3>Videoclip | 4:22 minutos | 02-02-2024</h3><h4>Trap confesional con narrativa simbólica: Nick bb celebra su propio funeral para despedirse de su pasado y presentar una nueva etapa artística. Ambientación oscura, elementos funerarios y ruptura de la foto final como cierre visual.</h4>' class="open-modal-link">
-            <img src="images/thumbs/ginebra.webp" alt="" />
-          </a>
-          <h2>Nick bb - Ginebra | Videoclip</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/cL8Y2IgLnwY" data-title="Nunca imaginé" data-extra='<h3>Videoclip | 3:38 minutos | 19-01-2024</h3><h4>Colaboración pop filmada en exteriores naturales. Colores vivos y puesta en escena ligera reflejan la complicidad de ambos artistas. La canción celebra un amor que se descubre inesperadamente y lo llena todo de energía positiva.</h4>' class="open-modal-link">
-            <img src="images/thumbs/nunca_imagine.webp" alt="" />
-          </a>
-          <h2>Rober Marccu - Nunca Imaginé | Videoclip</h2>
-        </article>
-
-        <article class="thumb">
-          <a href="#" data-video-url="https://www.youtube.com/embed/MBSswyDyb84" data-title="Sigues en mi mente" data-extra='<h3>Videoclip | 3:33 minutos | 01-12-2023</h3><h4>Relato de una conexión instantánea. Encuentro en discoteca, escapada en moto y atardecer en la montaña. Destaca la secuencia en carretera y la letra que repasa, hora a hora, una noche imposible de olvidar.</h4>' class="open-modal-link">
-            <img src="images/thumbs/sigues_en_mi_mente.webp" alt="" />
-          </a>
-          <h2>Rober Marccu - Sigues En Mi Mente | Videoclip</h2>
-        </article>
-      </div>
-
-      <!-- Footer -->
-      <footer id="footer" class="panel">
-        <div class="inner" style="text-align: center; color: white;">
-          <strong>Madrid, España</strong> &nbsp;&nbsp;
-          <ul class="icons" style="display: inline-flex; gap: 1rem; vertical-align: middle; margin: 0; padding: 0; list-style: none;">
-            <li><a href="https://www.instagram.com/1.85studios/" class="icon brands fa-instagram" style="color: white;"><span class="label">Instagram</span></a></li>
-            <li><a href="https://www.youtube.com/@185studios" class="icon brands fa-youtube" style="color: white;"><span class="label">YouTube</span></a></li>
-            <li><a href="https://www.linkedin.com/company/185studios/" class="icon brands fa-linkedin-in" style="color: white;"><span class="label">LinkedIn</span></a></li>
-          </ul>
-          &nbsp;&nbsp;
-          <span style="font-size: 0.9rem;">1.85estudios@gmail.com</span>
-        </div>
-      </footer>
-
-      <!-- Modal -->
-      <div id="videoModal" class="modal">
-        <div class="modal-content">
-          <span class="modal-close" onclick="closeModal()">&times;</span>
-          <div class="modal-body">
-            <iframe id="modalIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <div class="modal-title" id="modalTitle">Video Title</div>
-            <div id="modalExtraText" class="modal-extra-text"></div>
-          </div>
-        </div>
-      </div>
+<div id="videoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <button class="modal-close" type="button" aria-label="Cerrar">&times;</button>
+    <div class="modal-body">
+      <iframe id="modalIframe" title="Video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="modal-title" id="modalTitle"></div>
+      <div id="modalExtraText" class="modal-extra-text"></div>
     </div>
+  </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.poptrox.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script>
-      function openModal(videoUrl, title, extraHtml = '') {
-        document.getElementById("modalIframe").src = videoUrl;
-        document.getElementById("modalTitle").textContent = title;
-        document.getElementById("modalExtraText").innerHTML = extraHtml;
-        document.getElementById("videoModal").style.display = "flex";
-      }
+<script>
+(function(){
+  var modal=document.getElementById('videoModal'),
+      frame=document.getElementById('modalIframe'),
+      title=document.getElementById('modalTitle'),
+      extra=document.getElementById('modalExtraText');
 
-      function closeModal() {
-        const modal = document.getElementById("videoModal");
-        const iframe = document.getElementById("modalIframe");
-        iframe.src = "";
-        modal.style.display = "none";
-      }
+  function open(a){
+    frame.src=a.dataset.videoUrl;
+    title.textContent=a.dataset.title;
+    extra.innerHTML=a.dataset.extra||'';
+    modal.classList.add('open');
+    document.body.classList.add('lock');
+  }
+  function close(){
+    frame.removeAttribute('src');
+    modal.classList.remove('open');
+    document.body.classList.remove('lock');
+  }
 
-      window.addEventListener('load', () => {
-        closeModal();
-      });
-
-      document.querySelectorAll('.open-modal-link').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const videoUrl = link.getAttribute('data-video-url');
-          const title = link.getAttribute('data-title');
-          const extra = link.getAttribute('data-extra') || '';
-          openModal(videoUrl, title, extra);
-        });
-      });
-    </script>
-  </body>
+  document.getElementById('main').addEventListener('click',function(e){
+    var a=e.target.closest('.open-modal-link');
+    if(a){e.preventDefault();open(a);}
+  });
+  modal.addEventListener('click',function(e){
+    if(e.target===modal||e.target.classList.contains('modal-close'))close();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&modal.classList.contains('open'))close();
+  });
+})();
+</script>
+</body>
 </html>
-
